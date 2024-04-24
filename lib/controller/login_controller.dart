@@ -39,7 +39,7 @@ class LoginController extends GetxController {
       final response = await CommonHttpClient(GeneralController.to.user_type.value == UserType.Student.name ? apiStudent : apiAgent,
               method: HttpMethod.Post, body: body.toJson())
           .getResponse();
-      if (response != null) {
+      if (response != null && response.statusCode == 200) {
         var resBody = response.body;
         if (CommonUtils.checkIfNotNull(resBody)) {
           Map<String, dynamic> resMap = jsonDecode(resBody);
