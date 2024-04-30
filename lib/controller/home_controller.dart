@@ -28,7 +28,7 @@ class HomeController extends GetxController {
         }
       }
     } else {
-      CommonUtils.successToast("$logout Failed", something_went_wrong);
+      CommonUtils.failureToast("$logout Failed", something_went_wrong);
     }
   }
 
@@ -49,7 +49,7 @@ class HomeController extends GetxController {
         }
       }
     } else {
-      CommonUtils.successToast("$delete_user Failed", something_went_wrong);
+      CommonUtils.failureToast("$delete_user Failed", something_went_wrong);
     }
   }
 }
