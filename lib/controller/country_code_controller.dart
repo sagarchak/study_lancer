@@ -5,13 +5,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:study_lancer/api/common_http_client.dart';
 import 'package:study_lancer/api/url.dart';
+import 'package:study_lancer/controller/general_controller.dart';
 import 'package:study_lancer/entity/country_code_entity.dart';
 import 'package:study_lancer/enum/http.dart';
+import 'package:study_lancer/utils/app_constants.dart';
 import 'package:study_lancer/utils/common_utils.dart';
 
 class CountryCodeController extends GetxController {
   static CountryCodeController get to => Get.find();
-
+  RxBool checkLoading = false.obs;
   final TextEditingController codeController = TextEditingController();
   RxList<CountryCodeEntity> countryList = RxList<CountryCodeEntity>();
   RxList<CountryCodeEntity> searchList = RxList<CountryCodeEntity>();
@@ -39,11 +41,14 @@ class CountryCodeController extends GetxController {
   }
 
   onSearchTextChanged(String text) async {
+    checkLoading.value = true;
     searchList.clear();
     if (text.isEmpty) {
       return;
     }
-
+    Future.delayed(const Duration(seconds: 1), () {
+      checkLoading.value = false;
+    });
     countryList.forEach((countrylist) {
       var count = countrylist.name.split(" ")[0];
 

@@ -8,13 +8,15 @@ import 'package:pinput/pinput.dart';
 import 'package:study_lancer/controller/country_code_controller.dart';
 import 'package:study_lancer/controller/login_controller.dart';
 import 'package:study_lancer/controller/otp_controller.dart';
+import 'package:study_lancer/entity/otp_entity.dart';
 import 'package:study_lancer/screens/country_study_type.dart';
 import 'package:study_lancer/utils/app_constants.dart';
 import 'package:study_lancer/utils/colors.dart';
 import 'package:study_lancer/utils/style.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen();
+  String phone;
+  OTPScreen(this.phone, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +73,32 @@ class OTPScreen extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: Pinput(
-                    length: 6,
+                    errorPinTheme: PinTheme(decoration: BoxDecoration(border: Border.all(color: borderTextFeild))),
+                    controller: OTPController.to.otpontroller,
+                    length: 4,
+                    onChanged: (value) {
+                      OTPController.to.controlButton(value);
+                    },
                     defaultPinTheme: PinTheme(
                         decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: borderTextFeild))),
                         width: Get.width * 0.09,
                         height: Get.height * 0.035,
                         textStyle: StyleManager.regularPinTextStyle),
                   )),
+              const Spacer(
+                flex: 1,
+              ),
+              Obx(
+                () => Center(
+                  child: Text(
+                    OTPController.to.errorText.value,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    textScaleFactor: 1,
+                    style: StyleManager.regularErrorTextStyle,
+                  ),
+                ),
+              ),
               const Spacer(
                 flex: 3,
               ),
@@ -96,6 +117,7 @@ class OTPScreen extends StatelessWidget {
                         ? TextButton(
                             onPressed: () {
                               OTPController.to.startCode();
+                              OTPController.to.callApiResend(phone);
                             },
                             child: Text(
                               resend_OTP,
@@ -112,33 +134,48 @@ class OTPScreen extends StatelessWidget {
               const Spacer(
                 flex: 1,
               ),
-              DecoratedBox(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.05),
-                      spreadRadius: 8,
-                      blurRadius: 8,
-                      offset: const Offset(-3, -12),
-                    )
-                  ]),
-                  child: Obx(
-                    () => ElevatedButton(
-                      onPressed: () {
-                        Get.to(CountryStudyTypeScreen());
-                      },
-                      style: ElevatedButton.styleFrom(
-                          splashFactory: OTPController.to.isButtonEnable.isTrue ? null : NoSplash.splashFactory,
-                          foregroundColor: cardGradientcolor2,
-                          backgroundColor: cardGradientcolor2,
-                          minimumSize: const Size(230, 68),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                              side: const BorderSide(color: cardGradientcolor2, width: 10, strokeAlign: BorderSide.strokeAlignInside))),
-                      child: Text(verify,
-                          textScaleFactor: 1,
-                          style: OTPController.to.isButtonEnable.isTrue
-                              ? StyleManager.regularEnableButtonTextStyle
-                              : StyleManager.regularDisableButtonTextStyle),
+              Obx(() => InkWell(
+                    highlightColor: cardcolor,
+                    splashColor: cardcolor,
+                    radius: 100,
+                    onTap: OTPController.to.isButtonEnable.isTrue
+                        ? () {
+                            OTPController.to.callVerifyOTPApi(OTPEntity(phone, OTPController.to.otpontroller.text));
+                          }
+                        : null,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 59,
+                      width: 192,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: OTPController.to.isButtonEnable.isTrue ? buttonBorderColor : buttonBorderDisableColor,
+                            width: 2,
+                            strokeAlign: BorderSide.strokeAlignInside),
+                        color: cardcolor,
+                        borderRadius: BorderRadius.circular(100),
+                        gradient: const LinearGradient(
+                            colors: [buttonGradientColor1, buttonGradientColor2], begin: Alignment.center, end: Alignment.center),
+                        boxShadow: [
+                          BoxShadow(
+                              color: OTPController.to.isButtonEnable.isTrue ? shadowcolor1 : shadowcolor2,
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                              offset: Offset(6, 6)),
+                          BoxShadow(
+                              color: OTPController.to.isButtonEnable.isTrue ? shadowcolor2 : shadowcolor1,
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                              offset: Offset(-6, -6))
+                        ],
+                      ),
+                      child: Text(
+                        verify,
+                        textScaleFactor: 1,
+                        style: OTPController.to.isButtonEnable.isTrue
+                            ? StyleManager.regularEnableButtonTextStyle
+                            : StyleManager.regularDisableButtonTextStyle,
+                      ),
                     ),
                   )),
               const Spacer(

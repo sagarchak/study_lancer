@@ -7,7 +7,7 @@ part of 'country_code_entity.dart';
 // **************************************************************************
 
 CountryCodeEntity _$CountryCodeEntityFromJson(Map<String, dynamic> json) => CountryCodeEntity(
-      json?['id'] ?? 0,
+      json['id'] ?? 0,
       json['name'] ?? "",
       json['code'] ?? "",
       json['created_at'] ?? "",

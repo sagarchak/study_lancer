@@ -10,7 +10,7 @@ import 'package:study_lancer/screens/country_code_screen.dart';
 import 'package:study_lancer/screens/terms_and_condition_screen.dart';
 import 'package:study_lancer/utils/app_constants.dart';
 import 'package:study_lancer/utils/colors.dart';
-import 'package:study_lancer/utils/common_utils.dart';
+
 import 'package:study_lancer/utils/style.dart';
 
 class StartUp extends StatelessWidget {
@@ -28,8 +28,8 @@ class StartUp extends StatelessWidget {
         ),
         Container(
             padding: const EdgeInsets.all(10),
-            height: Get.height * 0.36,
-            width: Get.width * 8.95,
+            height: MediaQuery.of(context).size.height * 0.36,
+            width: MediaQuery.of(context).size.height * 8.95,
             decoration:
                 const BoxDecoration(color: cardcolor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -132,7 +132,7 @@ class StartUp extends StatelessWidget {
                         Get.to(const TermsAndCondition());
                       }),
               ]))
-            ]))
+            ])),
       ]),
     );
   }

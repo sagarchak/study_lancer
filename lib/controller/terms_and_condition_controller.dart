@@ -20,8 +20,9 @@ class TermsAndConditionController extends GetxController {
       var resBody = response.body;
       if (CommonUtils.checkIfNotNull(resBody)) {
         Map<String, dynamic> resMap = jsonDecode(resBody);
-        if (resMap != null) {
-          yield TermsAndCondtionEntity.fromJson(resMap["data"]);
+        var data = resMap["data"];
+        if (resMap != null && data != null) {
+          yield TermsAndCondtionEntity.fromJson(data);
         }
       }
     }

@@ -9,9 +9,15 @@ import 'package:study_lancer/utils/app_constants.dart';
 import 'package:study_lancer/utils/style.dart';
 
 class CommonUtils {
-  static saveToken(String token) async {
-    GeneralController.to.preferences = await SharedPreferences.getInstance();
-    GeneralController.to.preferences?.setString(bearer, token);
+  late SharedPreferences preferences;
+  saveToken(String token) async {
+    preferences = await SharedPreferences.getInstance();
+    preferences.setString(bearer, token);
+  }
+
+  getToken(String key) async {
+    preferences = await SharedPreferences.getInstance();
+    return preferences.getString(bearer);
   }
 
   static bool checkIfNotNull(String? value) {

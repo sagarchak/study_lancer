@@ -44,18 +44,22 @@ class LoginController extends GetxController {
         if (CommonUtils.checkIfNotNull(resBody)) {
           Map<String, dynamic> resMap = jsonDecode(resBody);
 
-          List data = resMap["data"];
-          if (resMap != null && data != null) {
-            CommonUtils.successToast("Login Success", login_success_description);
-            Get.to(const OTPScreen())?.then((value) {
+          Map<String, dynamic> data = resMap["data"];
+          String phone = data["phone"];
+          if (resMap != null && data != null && phone.isNotEmpty) {
+            CommonUtils.successToast(loginSuccessTitle, resMap["message"] ?? "");
+            loginTextController.text = "";
+            Get.to(OTPScreen(phone))?.then((value) {
               OTPController.to.secondsRemaining.value = 30;
               OTPController.to.timer.cancel();
               OTPController.to.isResend.value = true;
+              OTPController.to.errorText.value = "";
+              OTPController.to.otpontroller.text = "";
             });
           }
         }
       } else {
-        CommonUtils.failureToast("Login Failed", something_went_wrong);
+        CommonUtils.failureToast(loginFailedTitle, something_went_wrong);
       }
     }
   }

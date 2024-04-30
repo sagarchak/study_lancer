@@ -24,13 +24,12 @@ class CommonHttpClient {
   CommonHttpClient(this.url, {this.body, this.method = HttpMethod.Post, this.showLoading = false});
 
   initHeaders() async {
-    String? token = GeneralController.to.preferences?.getString(bearer);
-    String tk = "";
-    if (token != null && token.isNotEmpty) {
-      tk = bearer + token;
-    }
+    String? accessToken = await CommonUtils().getToken(bearer);
 
-    var headers = {'Accept': 'application/json', 'Authorization': tk};
+    if (accessToken != null && accessToken.isNotEmpty) {
+      accessToken;
+      headers = {'Accept': 'application/json', 'Authorization': "Bearer ${accessToken.substring(4)}"};
+    }
   }
 
   initBody() {

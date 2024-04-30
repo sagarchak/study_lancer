@@ -52,31 +52,33 @@ class CountryCode extends StatelessWidget {
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(35, 20, 35, 0),
-                  child: TextFormField(
-                    style: StyleManager.mediumTextStyle,
-                    onChanged: (text) {
-                      CountryCodeController.to.onSearchTextChanged(text);
-                    },
-                    controller: CountryCodeController.to.codeController,
-                    decoration: InputDecoration(
-                      hintText: search,
-                      hintStyle: StyleManager.lightTextStyle,
-                      filled: true,
-                      fillColor: textFieldTextColor,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: textFieldTextColor, width: 10.0),
-                        borderRadius: BorderRadius.circular(25.0),
+                    padding: const EdgeInsets.fromLTRB(35, 20, 35, 0),
+                    child: Obx(
+                      () => TextFormField(
+                        readOnly: CountryCodeController.to.countryList.isEmpty ? true : false,
+                        style: StyleManager.mediumTextStyle,
+                        onChanged: (text) {
+                          CountryCodeController.to.onSearchTextChanged(text);
+                        },
+                        controller: CountryCodeController.to.codeController,
+                        decoration: InputDecoration(
+                          hintText: search,
+                          hintStyle: StyleManager.lightTextStyle,
+                          filled: true,
+                          fillColor: textFieldTextColor,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: textFieldTextColor, width: 10.0),
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+                          prefixIconColor: highlightTextColor,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 30,
+                          ),
+                        ),
                       ),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                      prefixIconColor: highlightTextColor,
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
+                    )),
               ],
             ),
           ),
@@ -197,18 +199,21 @@ class CountryCode extends StatelessWidget {
                                           ? Padding(
                                               padding: const EdgeInsets.all(10.0),
                                               child: SizedBox(
-                                                width: Get.width * 0.09,
-                                                height: Get.height * 0.03,
-                                                child: SvgPicture.network(
-                                                  list[index].flag,
-                                                  fit: BoxFit.cover,
-                                                  placeholderBuilder: (BuildContext context) {
-                                                    return CircularProgressIndicator(
-                                                      color: Colors.green,
-                                                    );
-                                                  },
-                                                ),
-                                              ),
+                                                  width: Get.width * 0.09,
+                                                  height: Get.height * 0.03,
+                                                  child: Obx(() => !CountryCodeController.to.checkLoading.value
+                                                      ? SvgPicture.network(
+                                                          list[index].flag,
+                                                          fit: BoxFit.cover,
+                                                          placeholderBuilder: (BuildContext context) {
+                                                            return const CircularProgressIndicator(
+                                                              color: Colors.green,
+                                                            );
+                                                          },
+                                                        )
+                                                      : const CircularProgressIndicator(
+                                                          color: Colors.green,
+                                                        ))),
                                             )
                                           : const SizedBox.shrink(),
                                       SizedBox(

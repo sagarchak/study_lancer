@@ -144,35 +144,47 @@ class LoginScreen extends StatelessWidget {
               const Spacer(
                 flex: 3,
               ),
-              DecoratedBox(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.05),
-                      spreadRadius: 8,
-                      blurRadius: 8,
-                      offset: const Offset(-3, -12),
-                    )
-                  ]),
-                  child: Obx(
-                    () => ElevatedButton(
-                      onPressed: LoginController.to.isButtonEnable.isTrue
-                          ? () {
-                              LoginController.to.callLoginApi(LoginEntity(LoginController.to.loginTextController.text, telCode));
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                          splashFactory: LoginController.to.isButtonEnable.isTrue ? null : NoSplash.splashFactory,
-                          foregroundColor: cardGradientcolor2,
-                          backgroundColor: cardGradientcolor2,
-                          minimumSize: const Size(230, 68),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                              side: const BorderSide(color: cardGradientcolor2, width: 10, strokeAlign: BorderSide.strokeAlignInside))),
-                      child: Text(getOTP,
-                          textScaleFactor: 1,
-                          style: LoginController.to.isButtonEnable.isTrue
-                              ? StyleManager.regularEnableButtonTextStyle
-                              : StyleManager.regularDisableButtonTextStyle),
+              Obx(() => InkWell(
+                    highlightColor: cardcolor,
+                    splashColor: cardcolor,
+                    onTap: LoginController.to.isButtonEnable.isTrue
+                        ? () {
+                            LoginController.to.callLoginApi(LoginEntity(LoginController.to.loginTextController.text, telCode));
+                          }
+                        : null,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 59,
+                      width: 214,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: LoginController.to.isButtonEnable.isTrue ? buttonBorderColor : buttonBorderDisableColor,
+                            width: 2,
+                            strokeAlign: BorderSide.strokeAlignInside),
+                        color: cardcolor,
+                        borderRadius: BorderRadius.circular(100),
+                        gradient: const LinearGradient(
+                            colors: [buttonGradientColor1, buttonGradientColor2], begin: Alignment.center, end: Alignment.center),
+                        boxShadow: [
+                          BoxShadow(
+                              color: LoginController.to.isButtonEnable.isTrue ? shadowcolor1 : shadowcolor2,
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                              offset: Offset(6, 6)),
+                          BoxShadow(
+                              color: LoginController.to.isButtonEnable.isTrue ? shadowcolor2 : shadowcolor1,
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                              offset: Offset(-6, -6))
+                        ],
+                      ),
+                      child: Text(
+                        getOTP,
+                        textScaleFactor: 1,
+                        style: LoginController.to.isButtonEnable.isTrue
+                            ? StyleManager.regularEnableButtonTextStyle
+                            : StyleManager.regularDisableButtonTextStyle,
+                      ),
                     ),
                   )),
               const Spacer(

@@ -42,6 +42,14 @@ const String welcome = "Welcome";
 const String bearer = "Bearer";
 const String something_went_wrong = "Something Went Wrong";
 const String login_success_description = "You Logged in Successfully";
+const String otp_Error_text = "OTP does not match, please try again";
+const String resendOTPtitle = "Resend OTP";
+const String loginSuccessTitle = "Login Success";
+const String loginFailedTitle = "Login Failed";
+const String resendOTPFailedTitle = "Resend OTP Failed";
 
 //Internet
 const String NO_INTERNET = "Study Lancer is having trouble connecting to the internet. Please check your internet connection.";
+
+//Shared Prefer
+

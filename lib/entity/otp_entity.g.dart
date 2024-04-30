@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_entity.dart';
+part of 'otp_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoginEntity _$LoginEntityFromJson(Map<String, dynamic> json) => LoginEntity(
+OTPEntity _$OTPEntityFromJson(Map<String, dynamic> json) => OTPEntity(
       json['phone'],
-      json['tel_code'],
+      json['code'],
     );
 
-Map<String, String> _$LoginEntityToJson(LoginEntity instance) => <String, String>{
+Map<String, String> _$OTPEntityToJson(OTPEntity instance) => <String, String>{
       'phone': instance.phone,
-      'tel_code': instance.tel_code,
+      'code': instance.code,
     };
